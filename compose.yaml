@@ -1,0 +1,11 @@
+services:
+  caddy:
+    build:
+      context: .
+    image: transit-tv-demo-proxy:dev
+    ports:
+      - "8080:8080"   # change to "8080:80" if your Caddyfile listens on 80
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./static:/app/static:ro
+    restart: unless-stopped

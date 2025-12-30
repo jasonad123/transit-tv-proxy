@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transit TV Demo - Important Notice</title>
+    <!-- <link rel="stylesheet" href="/static/style.css"> -->
+    <link rel="stylesheet" href="/disclaimer-static/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="disclaimer-box">
+            <h1>Transit TV Demo</h1>
+                <div class = "api-logo">
+                    <a href="https://transitapp.com/partners/apis">
+                        <!-- <img src="/static/transit-api-badge.svg" alt="Transit API badge"> -->
+                        <img src="/disclaimer-static/transit-api-badge.svg" alt="Transit API badge">
+                    </a>
+                </div>
+            <div class="notice-section">
+                <h2>Heads up!</h2>
+                <ul class="notice-list">
+                    <li><strong>This is a demo</strong> - It's full-featured but intended for evaluation purposes only</li>
+                    <li><strong>Don't use this in production</strong> - This instance may be rate-limited, may go down without notice, and is not supported for production use
+                        <ul>
+                            <li><strong>If you do use this in production:</strong></li>
+                            <li>You will experience degraded performance</li>
+                            <li>I'll find out and I'll be <strong>very sad.</strong></li>
+                        </ul>
+                    </li>
+                    <li><strong>Work in progress</strong> - This is an active project and features may change</li>
+                    <li><strong>Cold start delays</strong> - The first load may take 30-60 seconds while the service wakes up</li>
+                    <li><strong>Want to use this yourself?</strong> - Visit the <a href="https://github.com/jasonad123/Transit-TV/" rel="noopener">GitHub repository</a> for deployment instructions</li>
+                </ul>
+            </div>
+
+            <div class="action-section">
+                <p>By continuing, you acknowledge this is a demo instance not intended for production use.</p>
+                <p class="redirect-notice">Redirecting to demo in <span id="countdown">45</span> seconds...</p>
+                <a href="/?acknowledged=true" class="acknowledge-btn">
+                    Continue Now
+                </a>
+            </div>
+
+            <div class="footer">
+                <p>Questions? Check the <a href="https://github.com/jasonad123/Transit-TV/" rel="noopener">documentation</a> or open an issue.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 45;
+        const countdownElement = document.getElementById('countdown');
+        
+        const timer = setInterval(() => {
+            timeLeft--;
+            countdownElement.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                window.location.href = '/?acknowledged=true';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
