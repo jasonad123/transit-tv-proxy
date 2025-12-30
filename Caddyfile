@@ -1,4 +1,9 @@
 :8080 {
+    # Health check for the proxy itself
+    handle /health {
+        respond "OK" 200
+    }
+
     # Straight reverse proxy to Transit TV
     reverse_proxy http://transit-tv.railway.internal:8080 {
         transport http {
