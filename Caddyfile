@@ -1,50 +1,12 @@
 :8080 {
-    # Health check for the proxy itself
-    handle /health {
-        respond "OK" 200
-    }
-
-    # Serve disclaimer stylesheet
-    handle /disclaimer-static/* {
-        uri strip_prefix /disclaimer-static
-        root * /app/static
-        file_server
-    }
-
-    # Proxy to Transit TV if there's an acknowledged query param
-    @has_acknowledged {
-        path /
-        query acknowledged=*
-    }
-    handle @has_acknowledged {
-        reverse_proxy http://transit-tv.railway.internal:8080 {
-            transport http {
-                dial_timeout 90s
-                response_header_timeout 90s
-            }
-            lb_try_duration 90s
-            header_up X-Forwarded-For {remote_host}
-            header_up X-Real-IP {remote_host}
+    # Straight reverse proxy to Transit TV
+    reverse_proxy http://transit-tv.railway.internal:8080 {
+        transport http {
+            dial_timeout 90s
+            response_header_timeout 90s
         }
-    }
-
-    # Show disclaimer at exact root with no query params
-    handle / {
-        root * /app/static
-        rewrite * /index.html
-        file_server
-    }
-
-    # Everything else proxies to Transit TV
-    handle {
-        reverse_proxy http://transit-tv.railway.internal:8080 {
-            transport http {
-                dial_timeout 90s
-                response_header_timeout 90s
-            }
-            lb_try_duration 90s
-            header_up X-Forwarded-For {remote_host}
-            header_up X-Real-IP {remote_host}
-        }
+        lb_try_duration 90s
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Real-IP {remote_host}
     }
 }
