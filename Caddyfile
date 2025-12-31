@@ -5,15 +5,6 @@
         output stdout
     }
 
-    # Security headers for production deployment
-    header {
-        X-Content-Type-Options nosniff
-        X-Frame-Options SAMEORIGIN
-        Referrer-Policy strict-origin-when-cross-origin
-        Permissions-Policy "microphone=(), camera=(), payment=()"
-        -Server
-    }
-
     # Health check endpoint for Railway
     handle /health {
         respond "OK" 200
@@ -21,7 +12,7 @@
 
     # Straight reverse proxy to Transit TV with Railway optimizations
     handle {
-        reverse_proxy http://transit-tv.railway.internal:8080 {
+        reverse_proxy {$TRANSIT_TV_DOMAIN} {
             transport http {
                 dial_timeout 90s
                 response_header_timeout 90s
