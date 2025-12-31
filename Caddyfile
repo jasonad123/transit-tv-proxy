@@ -5,19 +5,12 @@
         output stdout
     }
 
-    # Compression for API responses and static content
-    encode {
-        gzip {
-            level 5
-        }
-    }
-
     # Security headers for production deployment
     header {
         X-Content-Type-Options nosniff
         X-Frame-Options SAMEORIGIN
         Referrer-Policy strict-origin-when-cross-origin
-        Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()"
+        Permissions-Policy "microphone=(), camera=(), payment=()"
         -Server
     }
 
@@ -30,10 +23,10 @@
     handle {
         reverse_proxy http://transit-tv.railway.internal:8080 {
             transport http {
-                dial_timeout 60s
-                response_header_timeout 60s
+                dial_timeout 90s
+                response_header_timeout 90s
             }
-            lb_try_duration 60s
+            lb_try_duration 90s
             header_up X-Real-IP {remote_host}
             header_up Host {host}
             flush_interval -1
