@@ -5,6 +5,15 @@
         output stdout
     }
 
+    # Security headers for production deployment
+    header {
+        X-Content-Type-Options nosniff
+        X-Frame-Options SAMEORIGIN
+        Referrer-Policy strict-origin-when-cross-origin
+        Permissions-Policy "microphone=(), camera=(), payment=()"
+        -Server
+    }
+
     # Health check endpoint for Railway
     handle /health {
         respond "OK" 200
