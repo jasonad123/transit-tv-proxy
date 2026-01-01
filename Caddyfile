@@ -3,7 +3,7 @@
     log {
         format json
         output stdout
-        level {$LOG_LEVEL}
+        level ERROR
     }
 
     # Security headers for production deployment
