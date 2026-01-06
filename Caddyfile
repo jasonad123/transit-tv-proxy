@@ -19,7 +19,7 @@
 
     # Straight reverse proxy to Transit TV with Railway optimizations
     handle {
-        reverse_proxy {$TRANSIT_TV_DOMAIN}:{$TRANSIT_TV_PORT} {
+        reverse_proxy http://{$TRANSIT_TV_DOMAIN}:{$TRANSIT_TV_PORT} {
             transport http {
                 dial_timeout 90s
                 response_header_timeout 90s
